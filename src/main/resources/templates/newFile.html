@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link type="text/css" rel="stylesheet" href="style.css">
+<style>
+.player{
+margin: auto 0;
+width: 805px;
+height: 500px;
+/* background-color: #288eca; */
+display: block;
+}
+
+
+.header{
+width: 905px;
+height: 50px;
+background-color: red;
+float: left;
+opacity: 0.9;
+border-bottom: 2px solid #b1a3a3;
+}
+.searchBar{
+   width: 280px;
+   height: 40px;
+   margin-top: 10px;
+   float: right;
+}
+.searchBar input{
+	height: 24px;
+    width: 230px;
+    border-radius: 10px;
+    border: solid 1px grey;
+    outline: none;
+    padding-left: 10px;
+    position: absolute;
+}
+.imgSearch{
+	width: 20px;
+	height: 20px;
+	border: none;
+	position: relative;
+    right: -212px;
+}
+.imgSearch img{
+	max-width: 21px;
+	max-height: 21px;
+	margin-top: 4px;
+}
+.imgSearch img:hover{
+	cursor:pointer
+}
+.logo{
+	width: 80px;
+    height: 20px;
+    font-size: 20px;
+    color: white;
+    margin: 12 12 12 12;
+    margin-top: 10px;
+    margin-left: 10px;
+    float: left;
+}
+.content{
+width: 905px;
+height: 400px;
+/* background-color: green; */
+background-image:url('background.jpg');
+float: left;
+z-index: 0;
+position: relative;
+}
+.content:before{
+content: "";/* 必须包括 */
+  position: absolute;/* 固定模糊层位置 */
+  width:905px;
+  height:400px;
+  /* background:url(background.jpg) no-repeat center center fixed; *//* 与上面的bg中的background设置一样 */
+  background-image:url('background.jpg');
+  filter: blur(20px);/* 值越大越模糊 */
+  z-index: -2;/* 模糊层在最下面 */
+}
+.rgba{
+  background-color: rgba(0, 0, 0, 0.2);/* 为文字更好显示，将背景颜色加深 */
+  position: absolute;/* 固定半透明色层位置 */
+  width:200px;
+  height:400px;
+  z-index: -1;/* 中间是rgba半透明色层 */
+}
+.content_left{
+width: 200px;
+height: 400px;
+float: left;
+z-index: 0;/* 模糊层在最下面 */
+position: relative;
+border-right: 2px solid #b1a3a3;
+overflow: auto;
+}
+.content_left:before{
+width: 200px;
+height: 400px;
+/* background-color: #2c91b7; */
+float: left;
+filter: blur(50px);/* 值越大越模糊 */
+z-index: -1;/* 模糊层在最下面 */
+position: absolute;
+}
+
+.content_left ul{
+	list-style-type: none;
+    padding-left: 20px;
+}
+.content_left ul li{
+	list-style-type: none;
+    width: 180px;
+    height: 30px;
+    font-size: 14px;
+}
+.content_left ul li a{
+	display: block;
+	width:160px;
+	height: 26px;
+	padding-top: 6px;
+	padding-left: 10px;
+	border-radius: 10px;
+}
+.content_left ul li a:hover{	
+	background-color: #638e99;  
+}
+.content_left ul li span img{
+    background-image: url(radio.jpg);
+    max-width: 15px;
+    max-height: 15px;
+    float: left;
+    margin-right: 5px;
+    margin-top: 2px;
+}
+.content_left ul li a:link{text-decoration:none ; color:white;}
+.content_left ul li a:visited {text-decoration:none ; color:white;}
+.content_left ul li a:hover {text-decoration:none ; color:white;}
+.content_left ul li a:active {text-decoration:none ; colorwhite;}
+.content_center{
+width: 450px;
+height: 400px;
+/* background-color: #4764b5; */
+float: left;
+border-right: 2px solid #b1a3a3;
+}
+.content_right{
+width: 250px;
+height: 400px;
+float: left;
+}
+.titleStyle{
+    margin-top: 0px;
+    font-size: 17px;
+    color: wheat;
+}
+.commentList{
+width: 200px;
+height: 350px;
+padding-left: 10px;
+}
+.commentList img{
+	width:40px;
+	height: 40px;
+	border-radius:27%;
+	overflow:hidden;
+	display:block;
+	margin: 0;
+	padding: 0;
+}
+.headIcon{
+float: left;
+}
+.userName{
+    font-weight: bold;
+    padding-top: 14px;
+    padding-left: 10px;
+    color: #394979;
+}
+.detail{
+    margin-top: 17px;
+    margin-left: 50px;
+    font-size: 13px;
+    padding-right: 10px;
+    color: #504b4b;
+}
+.footer{
+width: 905px;
+height: 35px;
+background-color: yellow;
+float: left;
+border-top: 2px solid #b1a3a3;
+}
+audio{
+width: 905px;
+height: 34px;
+}
+
+
+</style>
+<body>
+	<div id="app">
+		<input type="button" value="显示天气"  @click="searchWeather('多云')">
+		<input type="button" value="天气列表"  @click="change()">
+		<input type="text" v-model="message" @keyup.enter="inputMethod()">
+		<p>{{message}}</p>
+		<ul v-show="isShow">
+			<li v-for="item in weatherList">{{item}}</li>
+		</ul>
+	</div>
+	<div id="musicPlayer" class="player">
+		<div id="header" class="header">
+			<div class="logo">天天净听</div>
+			<div class="searchBar">
+				<input id="searchBar" @keyup.enter="searchMusic()" v-model="keywords">
+				<span class="imgSearch"><img src="search.jpg" @click="searchMusic()"/></span>
+			</div>
+		</div>
+		<div id="content" class="content">
+			<div class="rgba"></div>
+			<div class="content_left">
+				<!-- <div class="rgba"></div> -->
+				<ul>
+					<li v-for="(item,index) in musicList">
+						<a href="javascript:;" @click="playMusic(index)"><b>{{item.name}}</b> <span><img src="radio.jpg"/></span></a>
+					</li>
+				</ul>
+			</div>
+			<div class="content_center">
+				<div class="wrap">
+				     <a v-bind:class="isPlay?'avatar-pic avatar':'avatar-pic pause'" href="javascript:;">
+				         <img src="background.jpg" alt="haha">
+				     </a>
+				     <i class="zantin action"></i>    
+				 </div>
+			</div>
+			<div class="content_right">
+				<h5 class="titleStyle">热门留言</h5>
+				<div class="commentList">
+					<dl v-for="item in comments">
+						<dt class="headIcon">
+							<img :src="item.headIconUrl" alt="">
+						</dt>
+						<dd class="userName">{{item.userName}}</dd>
+						<dd class="detail">{{item.detail}}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		
+		<div id="footer" class="footer">
+			<audio id="music" @play="play()" @pause="pause()" :src="musicUrl" controls autoplay preload="auto">
+			</audio>
+		</div>
+	</div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+<script src="vue.js"></script>
+<script src="axios.min.js"></script>
+<script>
+	var app = new Vue({
+		el :"#app",
+		data :{
+			message:"我会显示天气！",
+			weatherList:['晴','阴','雨','雪'],
+			isShow: false
+		},
+		methods :{
+			searchWeather :function(weather){
+				console.log("天气查询");
+				this.message = weather;
+			},
+			inputMethod: function(){
+				console.log("输入框方法触发了");
+			},
+			change:function(){
+				this.isShow = !this.isShow;
+			}
+		}
+	});
+	var musicPlayer = new Vue({
+		el:"#musicPlayer",
+		data:{
+			musicList:[],
+			comments:[],
+			isPlay:false,
+			musicUrl:'',
+			keywords:''
+		},
+		methods:{
+			play: function(){
+				this.isPlay = true;
+				console.log('play');
+			},
+			pause:function(){
+				this.isPlay = false;
+				console.log('pause');
+			},
+			playMusic:function(index){
+				console.log(index);
+				this.musicUrl = this.musicList[index].url;
+				this.comments = this.musicList[index].comments;
+				
+				console.log(this.comments);
+				console.log(this.musicUrl);
+			},
+			searchMusic:function(){
+				var that = this;
+				axios.get("http://localhost:8099/getMusicList?keywords="+this.keywords)
+				.then(function(response){
+					that.musicList = response.data;
+				},function(err){
+					
+				});
+			}
+		}
+	});
+</script>
+</html>

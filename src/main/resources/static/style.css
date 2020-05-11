@@ -1,0 +1,81 @@
+ .wrap{
+ 	margin-left: 110px;
+  	margin-top: 70px;
+     width:240px;
+     height:240px;
+     position:relative;
+ }
+ .avatar-pic{
+     width:240px;
+     height:240px;
+     border-radius:50%;
+     overflow:hidden;
+     display:block;
+     cursor:default;
+ }
+ .wrap>i{
+     position:absolute;
+     top:42px;
+     left:42px;
+     width:36px;
+     height:36px;
+     outline:none;
+     border-radius:50%;
+     cursor:pointer;
+ }
+ .wrap>i:hover{
+     background-color:rgba(0,0,0,.4);
+ }
+ .zantin{
+     background:url(icons_bds.png) no-repeat 0px -408px;
+ }
+ .action{
+     background:url(icons_bds.png) no-repeat -96px -408px;
+ }
+ 
+ 
+ 
+ .avatar{
+     animation:rotator 10s linear infinite;
+     -webkit-animation:rotator 10s linear infinite;
+     -moz-animation:rotator 10s linear infinite;
+     -o-animation:rotator 10s linear infinite;
+     -ms-animation:rotator 10s linear infinite;
+ 
+     -webkit-animation-play-state:running;
+     -moz-animation-play-state:running;
+     -o-animation-play-state:running;
+     -ms-animation-play-state:running;
+     animation-play-state:running;
+ }
+ .pause{
+     animation-play-state:paused;
+     -webkit-animation-play-state:paused;
+     -moz-animation-play-state:paused;
+     -o-animation-play-state:paused;
+     -ms-animation-play-state:paused;
+ }
+ 
+ @keyframes rotator{
+     from{transform:rotate(0deg);}
+     to{transform:rotate(360deg);}
+ }
+ @-webkit-keyframes rotator{
+     form{-webkit-transform:rotate(0deg);}
+     to{-webkit-transform:rotate(360deg);}
+ }
+ @-moz-keyframes rotator{
+     form{-moz-transform:rotate(0deg);}
+     to{-moz-transform:rotate(360deg);}
+ }
+ @-o-keyframes rotator{
+     form{-o-transform:rotate(0deg);}
+     to{-o-transform:rotate(360deg);}
+ }
+ @-ms-keyframes rotator{
+     form{-ms-transform:rotate(0deg);}
+     to{-ms-transform:rotate(360deg);}
+ }
+ .content_center img{
+  max-height: 240px;
+ }
